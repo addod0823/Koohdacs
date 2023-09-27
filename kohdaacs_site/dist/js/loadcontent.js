@@ -1,11 +1,15 @@
-
 const contentArea = document.getElementById("content-area-row");
 
-addContent(contentArea, "Hello there");
-addContent(contentArea, "Hello there y name is Arnold");
-addContent(contentArea, "This is the way like obi wan kanobi said");
-addContent(contentArea, "City boys, city boys, city boys");
-function addContent(contentAreaElement, des) {
+fetch("http://localhost:3000/BoardMembers")
+.then((response) => response.json())
+.then((members) => {
+    for (let i = 0; i < members.length; i++)
+    {
+        addContent(contentArea, members[i]);
+    }
+})
+
+function addContent(contentAreaElement, member) {
     const contentArea = contentAreaElement;
     const mainDiv = document.createElement("div");
     mainDiv.setAttribute('class', 'col');
@@ -18,8 +22,8 @@ function addContent(contentAreaElement, des) {
 
     const description = document.createElement("p");
     const title = document.createElement("strong");
-    title.innerText = "Arnold Kamdem"
-    description.innerText = des;
+    title.innerText = member.name;
+    description.innerText = member.description;
     description.setAttribute('class', 'card-text');
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -35,7 +39,7 @@ function addContent(contentAreaElement, des) {
     const svgimg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     svgimg.setAttributeNS(null, 'height', '100%');
     svgimg.setAttributeNS(null, 'width', '100%');
-    svgimg.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'assets/person-avatar-design_24877-38130.png');
+    svgimg.setAttributeNS('http://www.w3.org/1999/xlink', 'href', member.image);
     svgimg.setAttributeNS(null, 'x', '10');
     svgimg.setAttributeNS(null, 'y', '10');
     svgimg.setAttributeNS(null, 'visibility', 'visible');
